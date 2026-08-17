@@ -1,0 +1,10 @@
+Best Model: Linear SVM
+
+              precision    recall  f1-score   support
+
+       Clean       0.92      0.96      0.94      6489
+       Toxic       0.91      0.83      0.87      3245
+
+    accuracy                           0.92      9734
+   macro avg       0.91      0.89      0.90      9734
+weighted avg       0.91      0.92      0.91      9734

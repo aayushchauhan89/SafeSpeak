@@ -1,0 +1,14 @@
+{
+    "Multinomial Naive Bayes": {
+        "accuracy": 0.7414218204232587,
+        "f1_micro": 0.6990403706154864
+    },
+    "Logistic Regression": {
+        "accuracy": 0.7645366755701665,
+        "f1_micro": 0.7436354791632884
+    },
+    "Linear SVM (Calibrated)": {
+        "accuracy": 0.7635093486747483,
+        "f1_micro": 0.7509305456561337
+    }
+}
