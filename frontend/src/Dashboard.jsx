@@ -16,7 +16,6 @@ import {
 } from 'lucide-react';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from 'recharts';
 
-
 const API_BASE = import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000';
 
 const Dashboard = ({ handleLogout }) => {
@@ -45,7 +44,6 @@ const Dashboard = ({ handleLogout }) => {
     setStatsLoading(true);
     try {
       const token = localStorage.getItem('token');
-      
       const response = await fetch(`${API_BASE}/api/dashboard/stats`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
@@ -64,7 +62,6 @@ const Dashboard = ({ handleLogout }) => {
     setHistoryLoading(true);
     try {
       const token = localStorage.getItem('token');
-      // Updated hardcoded URL
       const response = await fetch(`${API_BASE}/api/history`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
@@ -82,7 +79,6 @@ const Dashboard = ({ handleLogout }) => {
   const handleDeleteHistory = async (id) => {
     try {
       const token = localStorage.getItem('token');
-      // Updated hardcoded URL
       const response = await fetch(`${API_BASE}/api/history/${id}`, {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${token}` }
@@ -114,7 +110,6 @@ const Dashboard = ({ handleLogout }) => {
       const token = localStorage.getItem('token');
       if (!token) throw new Error("Unauthorized. Please log in again.");
 
-      
       const response = await fetch(`${API_BASE}/api/analyze`, {
         method: 'POST',
         headers: {
@@ -204,7 +199,7 @@ const Dashboard = ({ handleLogout }) => {
           </div>
         </header>
 
-        <div className="flex-1 overflow-y-auto p-8">
+        <div className="flex-1 overflow-y-auto p-8 pb-24 md:pb-8">
           <div className="max-w-4xl mx-auto space-y-8">
             
             {activeTab === 'overview' && (
@@ -436,7 +431,7 @@ const Dashboard = ({ handleLogout }) => {
                       <div key={item._id} className="bg-white rounded-xl border border-gray-200 p-5 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 shadow-sm">
                         <div className="space-y-1.5 flex-1">
                           <p className="text-gray-900 font-medium text-sm">"{item.original_text}"</p>
-                          <div className="flex items-center gap-2 text-xs">
+                          <div className="files flex items-center gap-2 text-xs">
                             <span className={`px-2 py-0.5 rounded-full font-semibold ${item.analysis_tier === 'Toxic' ? 'bg-red-100 text-red-700' : item.analysis_tier === 'Constructive_Feedback' ? 'bg-amber-100 text-amber-700' : 'bg-green-100 text-green-700'}`}>
                               {item.analysis_tier.replace('_', ' ')}
                             </span>
@@ -461,12 +456,41 @@ const Dashboard = ({ handleLogout }) => {
 
           </div>
         </div>
+
+        <div className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 flex justify-around items-center h-16 px-2 z-50 shadow-lg">
+          <button 
+            onClick={() => setActiveTab('overview')}
+            className={`flex flex-col items-center justify-center flex-1 py-1 text-xs font-medium ${activeTab === 'overview' ? 'text-indigo-600' : 'text-gray-500'}`}
+          >
+            <LayoutDashboard className="w-5 h-5 mb-1" />
+            Overview
+          </button>
+          <button 
+            onClick={() => setActiveTab('analyzer')}
+            className={`flex flex-col items-center justify-center flex-1 py-1 text-xs font-medium ${activeTab === 'analyzer' ? 'text-indigo-600' : 'text-gray-500'}`}
+          >
+            <MessageSquareWarning className="w-5 h-5 mb-1" />
+            Analyzer
+          </button>
+          <button 
+            onClick={() => setActiveTab('history')}
+            className={`flex flex-col items-center justify-center flex-1 py-1 text-xs font-medium ${activeTab === 'history' ? 'text-indigo-600' : 'text-gray-500'}`}
+          >
+            <HistoryIcon className="w-5 h-5 mb-1" />
+            History
+          </button>
+          <button 
+            onClick={handleLogout}
+            className="flex flex-col items-center justify-center flex-1 py-1 text-xs font-medium text-red-500"
+          >
+            <LogOut className="w-5 h-5 mb-1" />
+            Logout
+          </button>
+        </div>
+
       </main>
     </div>
   );
 };
 
 export default Dashboard;
-
-
-
