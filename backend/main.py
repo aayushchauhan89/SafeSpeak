@@ -14,9 +14,13 @@ from services import get_lime_explanation, rewrite_text_constructively, analyze_
 
 app = FastAPI(title="SafeSpeak API", version="2.0.0")
 
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=[
+        "http://localhost:5173",           # For local testing
+        "https://safespeak-phi.vercel.app" # Your live Vercel frontend
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -30,10 +34,11 @@ categories = ['toxic', 'severe_toxic', 'obscene', 'threat', 'insult', 'identity_
 async def startup_event():
     await init_db()
 
+
 class UserRegister(BaseModel):
     email: EmailStr
     password: str
-    full_name: str
+    full_name: Optional[str] = "User"
 
 class TextRequest(BaseModel):
     text: str
@@ -161,4 +166,4 @@ async def get_dashboard_stats(current_user: User = Depends(get_current_user)):
     }
 
 
-    
+
