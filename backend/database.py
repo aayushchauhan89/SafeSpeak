@@ -7,12 +7,12 @@ from dotenv import load_dotenv
 load_dotenv()
 
 async def init_db():
-    
-    client = AsyncIOMotorClient(os.getenv("MONGODB_URI"))
-    
+    client = AsyncIOMotorClient(os.getenv("MONGO_URI"))
     
     database = client.safespeak
     
-    
     await init_beanie(database=database, document_models=[User, AnalysisHistory])
     print("MongoDB Atlas connection established successfully.")
+
+
+    
