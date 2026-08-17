@@ -16,6 +16,9 @@ import {
 } from 'lucide-react';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from 'recharts';
 
+
+const API_BASE = import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000';
+
 const Dashboard = ({ handleLogout }) => {
   const [activeTab, setActiveTab] = useState('overview');
   const [showTechnical, setShowTechnical] = useState(false);
@@ -42,7 +45,8 @@ const Dashboard = ({ handleLogout }) => {
     setStatsLoading(true);
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch('http://127.0.0.1:8000/api/dashboard/stats', {
+      
+      const response = await fetch(`${API_BASE}/api/dashboard/stats`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       if (response.ok) {
@@ -60,7 +64,8 @@ const Dashboard = ({ handleLogout }) => {
     setHistoryLoading(true);
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch('http://127.0.0.1:8000/api/history', {
+      // Updated hardcoded URL
+      const response = await fetch(`${API_BASE}/api/history`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       if (response.ok) {
@@ -77,7 +82,8 @@ const Dashboard = ({ handleLogout }) => {
   const handleDeleteHistory = async (id) => {
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch(`http://127.0.0.1:8000/api/history/${id}`, {
+      // Updated hardcoded URL
+      const response = await fetch(`${API_BASE}/api/history/${id}`, {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${token}` }
       });
@@ -108,7 +114,8 @@ const Dashboard = ({ handleLogout }) => {
       const token = localStorage.getItem('token');
       if (!token) throw new Error("Unauthorized. Please log in again.");
 
-      const response = await fetch('http://127.0.0.1:8000/api/analyze', {
+      
+      const response = await fetch(`${API_BASE}/api/analyze`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -460,3 +467,6 @@ const Dashboard = ({ handleLogout }) => {
 };
 
 export default Dashboard;
+
+
+
